@@ -64,3 +64,28 @@ removeCover.addEventListener('click', function addingItem() {
 
     document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - 59;
 })
+
+// Removing the cart
+const remove = document.getElementsByClassName('remove-item');
+for (let i = 0; i < remove.length; i++) {
+    const element = remove[i];
+    element.addEventListener('click', function removeItem() {
+        document.getElementsByClassName("cart-item")[i]
+        // .style.display = "none"
+        if (document.getElementsByClassName("cart-item")[i] == document.getElementsByClassName("cart-item")[0]) {
+            document.getElementsByClassName("cart-item")[i].style.display = "none"
+
+            document.getElementById('tax').innerText = floatingTextNumber('tax') - floatingTextNumber('tax');
+
+            document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - floatingTextNumber('iphonePrice');
+
+            document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - (floatingTextNumber('iphonePrice') + floatingTextNumber('tax'));
+        } else if (document.getElementsByClassName("cart-item")[i] == document.getElementsByClassName("cart-item")[1]) {
+            document.getElementsByClassName("cart-item")[i].style.display = "none"
+
+            document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - floatingTextNumber('coverPrice');
+
+            document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - floatingTextNumber('coverPrice');
+        }
+    })
+}
