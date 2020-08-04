@@ -1,91 +1,53 @@
-// // Common function for purse float
-function floatingNumber(id) {
-    const input = document.getElementById(id).value;
-    const number = parseFloat(input);
-    return number;
+// increase decrease price
+function increaseDecreaseHandler(input, price, isIncrease) {
+    const Input = document.getElementById(input);
+    const number = parseInt(Input.value);
+    let newCount = number;
+    if (isIncrease == true) {
+        newCount = number + 1;
+    } else if (isIncrease == false && number > 0) {
+        newCount = number - 1;
+    }
+    Input.value = newCount;
+    let totalCost = 0;
+    if (input == 'phoneInput') {
+        totalCost = newCount * 1219;
+    } else if (input == 'coverInput') {
+        totalCost = newCount * 59;
+    }
+    document.getElementById(price).innerText = totalCost;
+    calculateSubTotal()
+    calculateTotal()
 }
+// calculate subtotal
+function calculateSubTotal() {
+    const phoneInput = floatToNumber('phoneInput');
+    const coverInput = floatToNumber('coverInput');
+    let subtotal = phoneInput * 1219 + coverInput * 59;
+    document.getElementById('subTotalPrice').innerText = subtotal;
 
-function floatingTextNumber(id) {
-    const inputText = document.getElementById(id).innerText;
-    const inputNumber = parseFloat(inputText);
+    const tax = subtotal * 0.1;
+    document.getElementById('tax').innerText = Math.round(tax);
+
+    const total = subtotal + tax;
+    document.getElementById('totalPrice').innerText = Math.round(total);
+}
+// converting string to number
+function floatToNumber(id) {
+    let input = document.getElementById(id);
+    let inputNumber = parseInt(input.value);
     return inputNumber;
 }
-
-
-// Adding iphone to the cart
-const addNumber = document.getElementById('add-item');
-addNumber.addEventListener('click', function addingItem() {
-    document.getElementById('numberInput').value = floatingNumber('numberInput') + 1;
-
-    document.getElementById('iphonePrice').innerText = floatingTextNumber('iphonePrice') + 1219;
-
-    document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') + 1219;
-
-    document.getElementById('tax').innerText = floatingTextNumber('tax') + 12;
-
-    document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') + 1231;
-})
-
-// Removing iphone from the cart
-const removeNumber = document.getElementById('remove-item');
-removeNumber.addEventListener('click', function removingItem() {
-    document.getElementById('numberInput').value = floatingNumber('numberInput') - 1;
-
-    document.getElementById('iphonePrice').innerText = floatingTextNumber('iphonePrice') - 1219;
-
-    document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - 1219;
-
-    document.getElementById('tax').innerText = floatingTextNumber('tax') - 12;
-
-    document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - 1231;
-})
-
-// Adding iphone cover to the cart
-const addCover = document.getElementById('add-cover');
-addCover.addEventListener('click', function addingItem() {
-    document.getElementById('coverInput').value = floatingNumber('coverInput') + 1;
-
-    document.getElementById('coverPrice').innerText = floatingTextNumber('coverPrice') + 59;
-
-    document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') + 59;
-
-    document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') + 59;
-})
-
-
-// Remove iphone cover to the cart
-const removeCover = document.getElementById('remove-cover');
-removeCover.addEventListener('click', function addingItem() {
-    document.getElementById('coverInput').value = floatingNumber('coverInput') - 1;
-
-    document.getElementById('coverPrice').innerText = floatingTextNumber('coverPrice') - 59;
-
-    document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - 59;
-
-    document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - 59;
-})
-
-// Removing the cart
-const remove = document.getElementsByClassName('remove-item');
-for (let i = 0; i < remove.length; i++) {
-    const element = remove[i];
-    element.addEventListener('click', function removeItem() {
-        document.getElementsByClassName("cart-item")[i]
-        // .style.display = "none"
-        if (document.getElementsByClassName("cart-item")[i] == document.getElementsByClassName("cart-item")[0]) {
-            document.getElementsByClassName("cart-item")[i].style.display = "none"
-
-            document.getElementById('tax').innerText = floatingTextNumber('tax') - floatingTextNumber('tax');
-
-            document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - floatingTextNumber('iphonePrice');
-
-            document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - (floatingTextNumber('iphonePrice') + floatingTextNumber('tax'));
-        } else if (document.getElementsByClassName("cart-item")[i] == document.getElementsByClassName("cart-item")[1]) {
-            document.getElementsByClassName("cart-item")[i].style.display = "none"
-
-            document.getElementById('subTotalPrice').innerText = floatingTextNumber('subTotalPrice') - floatingTextNumber('coverPrice');
-
-            document.getElementById('totalPrice').innerText = floatingTextNumber('totalPrice') - floatingTextNumber('coverPrice');
+// active remove icon
+let removeIcon = document.getElementsByClassName("remove-item");
+for (let i = 0; i < removeIcon.length; i++) {
+    const removeElement = removeIcon[i];
+    removeElement.addEventListener('click', function () {
+        if (removeElement == removeIcon[0]) {
+            document.getElementById('phone-cart').style.display = ("none");
+        } else {
+            document.getElementById('case-cart').style.display = ("none");
         }
     })
+
 }
